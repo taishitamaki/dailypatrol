@@ -1229,7 +1229,7 @@ async function uploadToDropbox() {
             loadingText.textContent = 'Dropboxに保存完了！';
             setTimeout(() => {
                 overlay.classList.remove('show');
-                alert(`✅ Dropboxに保存しました！\n\nファイル名: ${result.name}\nパス: ${result.path_display}\n\n※ファイルはDropboxの「アプリ」→「AnzenJunshiNippo」フォルダ内にあります。`);
+                alert(`✅ Dropboxに保存しました！\n\nファイル名: ${result.name}\nパス: ${result.path_display}\n\n※ファイルはDropboxの「アプリ」→「dailypatrol」フォルダ内にあります。`);
             }, 1000);
         } else {
             const errorText = await response.text();
