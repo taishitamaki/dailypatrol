@@ -1197,14 +1197,15 @@ async function uploadToDropbox() {
         loadingText.textContent = 'Dropboxにアップロード中...';
         
         const reiwaYear = document.getElementById('reiwaYear').value || 'X';
-        const month = document.getElementById('month').value || 'X';
-        const day = document.getElementById('day').value || 'X';
-        const filename = `元方安全巡視日報_R${reiwaYear}_${month}_${day}.pdf`;
+        const month = String(document.getElementById('month').value || 'X').padStart(2, '0');
+        const day = String(document.getElementById('day').value || 'X').padStart(2, '0');
+        
+        // 日本語を含まないファイル名に変更
+        const filename = `anzen_junshi_R${reiwaYear}_${month}_${day}.pdf`;
         
         console.log('ファイル名:', filename);
         console.log('アップロード開始...');
         
-        // Blobを直接使用する方法に変更
         const response = await fetch('https://content.dropboxapi.com/2/files/upload', {
             method: 'POST',
             headers: {
@@ -1228,7 +1229,7 @@ async function uploadToDropbox() {
             loadingText.textContent = 'Dropboxに保存完了！';
             setTimeout(() => {
                 overlay.classList.remove('show');
-                alert(`✅ Dropboxに保存しました！\n\nファイル名: ${result.name}\nパス: ${result.path_display}`);
+                alert(`✅ Dropboxに保存しました！\n\nファイル名: ${result.name}\nパス: ${result.path_display}\n\n※ファイルはDropboxの「アプリ」→「AnzenJunshiNippo」フォルダ内にあります。`);
             }, 1000);
         } else {
             const errorText = await response.text();
@@ -1249,6 +1250,7 @@ async function uploadToDropbox() {
         alert('❌ Dropboxへの保存に失敗しました\n\nエラー: ' + error.message + '\n\nブラウザのコンソール（F12キー）を開いて詳細を確認してください。');
     }
 }
+        
         async function exportToPDF() {
             const overlay = document.getElementById('loadingOverlay');
             const loadingText = document.getElementById('loadingText');
