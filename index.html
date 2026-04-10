@@ -1,0 +1,1165 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <title>工事現場安全巡視日報</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', 'Yu Gothic', YuGothic, Meiryo, sans-serif;
+            background: #f0f2f5;
+            padding: 0;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        .mobile-container {
+            max-width: 100%;
+            margin: 0 auto;
+            background: white;
+            min-height: 100vh;
+        }
+
+        .mobile-title {
+            text-align: center;
+            font-size: 22px;
+            font-weight: bold;
+            padding: 20px 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-section {
+            background: #ffffff;
+            padding: 20px 15px;
+            margin-bottom: 0;
+            border-bottom: 8px solid #f0f2f5;
+        }
+
+        .header-row {
+            margin-bottom: 20px;
+        }
+
+        .header-item {
+            width: 100%;
+            margin-bottom: 15px;
+        }
+
+        .header-item label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 8px;
+            font-size: 16px;
+            color: #333;
+        }
+
+        .header-item input,
+        .header-item select,
+        .header-item textarea {
+            width: 100%;
+            padding: 14px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', sans-serif;
+            transition: border-color 0.3s;
+        }
+
+        .header-item input:focus,
+        .header-item select:focus,
+        .header-item textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .header-item textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .date-input-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .date-input-group input {
+            width: 70px;
+            padding: 12px 8px;
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .date-input-group span {
+            font-size: 16px;
+            font-weight: bold;
+            color: #666;
+        }
+
+        .time-section {
+            background: #e8f4f8;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 12px;
+            border-left: 5px solid #2196F3;
+        }
+
+        .time-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            gap: 10px;
+        }
+
+        .time-row:last-child {
+            margin-bottom: 0;
+        }
+
+        .time-label {
+            font-weight: bold;
+            min-width: 140px;
+            font-size: 16px;
+            color: #333;
+        }
+
+        .time-input {
+            flex: 1;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .section-mobile {
+            margin-bottom: 0;
+            background: white;
+        }
+
+        .section-title-mobile {
+            background: linear-gradient(135deg, #434343 0%, #000000 100%);
+            color: white;
+            padding: 16px 15px;
+            font-weight: bold;
+            font-size: 18px;
+            position: sticky;
+            top: 62px;
+            z-index: 99;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        }
+
+        .instruction-box {
+            background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+            padding: 16px;
+            margin: 0;
+            border-left: 5px solid #4CAF50;
+            font-size: 15px;
+        }
+
+        .instruction-box strong {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 16px;
+            color: #2e7d32;
+        }
+
+        .check-item {
+            padding: 20px 15px;
+            border-bottom: 3px solid #f0f2f5;
+            background: white;
+        }
+
+        .check-item:active {
+            background: #f9f9f9;
+        }
+
+        .item-header {
+            margin-bottom: 15px;
+        }
+
+        .item-number {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            font-weight: bold;
+            width: 40px;
+            height: 40px;
+            line-height: 40px;
+            text-align: center;
+            border-radius: 50%;
+            font-size: 16px;
+            margin-right: 10px;
+            vertical-align: middle;
+        }
+
+        .item-text {
+            display: inline;
+            font-size: 16px;
+            line-height: 1.6;
+            color: #333;
+            font-weight: 500;
+        }
+
+        .check-groups-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .check-and-remarks-group {
+            background: #fafafa;
+            padding: 15px;
+            border-radius: 10px;
+            border: 2px solid #e0e0e0;
+        }
+
+        .check-and-remarks-group.hidden {
+            display: none;
+        }
+
+        .time-label-mobile {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 12px;
+            color: #667eea;
+            display: block;
+            text-align: center;
+            background: white;
+            padding: 8px;
+            border-radius: 6px;
+        }
+
+        .check-buttons-row {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 12px;
+            justify-content: center;
+        }
+
+        .check-button {
+            flex: 1;
+            height: 60px;
+            border: 3px solid #ccc;
+            background: white;
+            border-radius: 10px;
+            font-size: 24px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s;
+            -webkit-tap-highlight-color: transparent;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .check-button:active {
+            transform: scale(0.95);
+        }
+
+        .check-button.active {
+            background: #4CAF50;
+            color: white;
+            border-color: #4CAF50;
+            box-shadow: 0 4px 8px rgba(76, 175, 80, 0.3);
+        }
+
+        .remarks-input {
+            width: 100%;
+            padding: 14px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', sans-serif;
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .remarks-input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .confirmation-section {
+            background: linear-gradient(135deg, #fff9e6 0%, #ffe0b2 100%);
+            padding: 25px 15px;
+            margin: 0;
+            border-top: 5px solid #ff9800;
+            border-bottom: 8px solid #f0f2f5;
+        }
+
+        .confirmation-title {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #e65100;
+            text-align: center;
+        }
+
+        .confirmation-item {
+            display: flex;
+            align-items: center;
+            padding: 18px;
+            gap: 15px;
+            margin-bottom: 15px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .confirmation-checkbox {
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+
+        .confirmation-label {
+            flex: 1;
+            font-weight: bold;
+            font-size: 18px;
+            color: #333;
+        }
+
+        .output-buttons {
+            padding: 20px 15px;
+            background: white;
+            position: sticky;
+            bottom: 0;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+            z-index: 100;
+        }
+
+        .output-button {
+            width: 100%;
+            padding: 18px;
+            font-size: 18px;
+            font-weight: bold;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-bottom: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .output-button:active {
+            transform: translateY(2px);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .pdf-button {
+            background: linear-gradient(135deg, #2196F3 0%, #1976D2 100%);
+            color: white;
+        }
+
+        .clear-button {
+            background: linear-gradient(135deg, #f44336 0%, #d32f2f 100%);
+            color: white;
+        }
+
+        .pdf-output-wrapper {
+            background: white;
+            padding: 8mm;
+            width: 277mm;
+            margin: 0 auto;
+        }
+
+        .pdf-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-family: 'MS Gothic', 'MS PGothic', sans-serif;
+            font-size: 6pt;
+            background: white;
+        }
+
+        .pdf-table td {
+            border: 0.5px solid #000;
+            padding: 1px 2px;
+            vertical-align: middle;
+        }
+
+        .pdf-title {
+            text-align: center;
+            font-size: 14pt;
+            font-weight: bold;
+            padding: 6px;
+        }
+
+        .pdf-header-label {
+            background-color: #d0cece;
+            font-weight: bold;
+            text-align: center;
+            padding: 2px;
+            font-size: 6pt;
+        }
+
+        .pdf-value {
+            padding: 2px 3px;
+            font-size: 6pt;
+        }
+
+        .pdf-section-header {
+            background-color: #d0cece;
+            font-weight: bold;
+            text-align: center;
+            padding: 2px;
+            font-size: 6pt;
+        }
+
+        .pdf-item-no {
+            text-align: center;
+            width: 15px;
+            font-size: 5.5pt;
+        }
+
+        .pdf-item-text {
+            padding-left: 3px;
+            font-size: 5.5pt;
+            line-height: 1.2;
+        }
+
+        .pdf-check-cell {
+            text-align: center;
+            width: 12px;
+            font-size: 8pt;
+            font-weight: bold;
+        }
+
+        .pdf-remarks-cell {
+            padding: 1px 2px;
+            font-size: 5.5pt;
+            line-height: 1.2;
+            text-align: left;
+        }
+
+        .pdf-supervisor-cell {
+            padding: 2px 3px;
+            font-size: 5.5pt;
+            line-height: 1.2;
+            text-align: left;
+            vertical-align: top;
+        }
+
+        .pdf-stamp-cell {
+            text-align: center;
+            padding: 4px;
+            vertical-align: middle;
+        }
+
+        .pdf-stamp-image {
+            max-width: 60px;
+            max-height: 60px;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .loading-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .loading-overlay.show {
+            display: flex;
+        }
+
+        .loading-content {
+            background: white;
+            padding: 40px 30px;
+            border-radius: 16px;
+            text-align: center;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        }
+
+        .spinner {
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #667eea;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        #loadingText {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        #pdfOutputArea {
+            display: none;
+        }
+
+        @media (min-width: 768px) {
+            .mobile-container {
+                max-width: 768px;
+                margin: 20px auto;
+                border-radius: 12px;
+                box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            }
+
+            .mobile-title {
+                border-radius: 12px 12px 0 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-content">
+            <div class="spinner"></div>
+            <p id="loadingText">処理中...</p>
+        </div>
+    </div>
+
+    <div class="mobile-container">
+        <h1 class="mobile-title">工事現場安全巡視日報</h1>
+
+        <div class="header-section">
+            <div class="header-row">
+                <div class="header-item">
+                    <label>工事名</label>
+                    <input type="text" id="constructionName" value="R7・8・9万世橋維持工事" />
+                </div>
+                <div class="header-item">
+                    <label>安全巡視者</label>
+                    <input type="text" id="patrolName" value="玉置大志・小田幸生" />
+                </div>
+            </div>
+
+            <div class="header-row">
+                <div class="header-item">
+                    <label>巡視日（令和）</label>
+                    <div class="date-input-group">
+                        <input type="number" id="reiwaYear" placeholder="8" min="1" max="99" />
+                        <span>年</span>
+                        <input type="number" id="month" placeholder="4" min="1" max="12" />
+                        <span>月</span>
+                        <input type="number" id="day" placeholder="10" min="1" max="31" />
+                        <span>日</span>
+                    </div>
+                </div>
+                <div class="header-item">
+                    <label>天気</label>
+                    <select id="weather">
+                        <option value="">選択してください</option>
+                        <option value="晴">☀️ 晴</option>
+                        <option value="曇">☁️ 曇</option>
+                        <option value="雨">🌧️ 雨</option>
+                        <option value="雪">⛄ 雪</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="time-section">
+                <div class="time-row">
+                    <span class="time-label">巡視時間 AM</span>
+                    <input type="text" class="time-input" id="timeAM" placeholder="例: 10時" />
+                </div>
+                <div class="time-row">
+                    <span class="time-label">巡視時間 PM</span>
+                    <input type="text" class="time-input" id="timePM" placeholder="例: 3時" />
+                </div>
+                <div class="time-row">
+                    <span class="time-label">作業終了時</span>
+                    <input type="text" class="time-input" id="timeEnd" placeholder="例: 5時" />
+                </div>
+            </div>
+
+            <div class="header-row">
+                <div class="header-item">
+                    <label>統括安全責任者コメント（路線・作業内容・その他）</label>
+                    <textarea id="supervisorComment" rows="4" placeholder="路線、作業内容、その他の情報や全体的なコメントを記入してください"></textarea>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-mobile">
+            <div class="section-title-mobile">安全巡視点検項目（31項目）</div>
+            <div class="instruction-box">
+                <strong>📝 記入方法</strong>
+                AM・PM・作業終了時の各判定（○×-）を選択し、必要に応じて記事を入力してください
+            </div>
+            <div id="mobileCheckItems"></div>
+        </div>
+
+        <div class="confirmation-section">
+            <h2 class="confirmation-title">✅ 確認欄</h2>
+            
+            <div class="confirmation-item">
+                <input type="checkbox" class="confirmation-checkbox" id="confirmDairi" />
+                <label class="confirmation-label" for="confirmDairi">現場代理人確認</label>
+            </div>
+
+            <div class="confirmation-item">
+                <input type="checkbox" class="confirmation-checkbox" id="confirmKanri" />
+                <label class="confirmation-label" for="confirmKanri">監理技術者確認</label>
+            </div>
+        </div>
+
+        <div class="output-buttons">
+            <button class="output-button pdf-button" onclick="exportToPDF()">📄 PDF出力</button>
+            <button class="output-button clear-button" onclick="clearAll()">🗑️ すべてクリア</button>
+        </div>
+    </div>
+
+    <div id="pdfOutputArea"></div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+    <script>
+        const checkItems = [
+            "土留め支保工の点検（震度4以上の地震後、大雨後　土留め支保工の点検表による）",
+            "地山の点検（点検者の氏名、震度４以上の地震後、大雨後）",
+            "保護帽、安全靴、ゴグル、マスク、保護手袋、安全帯、ﾁｮｯｷ等服装は適切か？",
+            "吊り荷の下に入ったり、重機に接近する等不安全行動をしていないか？",
+            "誘導員は警笛装置を携帯してるか？旗、誘導灯は良いか？",
+            "作業の手順は守っているか？",
+            "作業(据付)場所は整理されているか？",
+            "操作(作業)方法は手順書どおりで適切か？資格者の配置は？",
+            "整備･点検はされているか？",
+            "用途外使用はしていないか？",
+            "車両系建設機械等に取扱責任者名が表示されているか？",
+            "標識にみだれがないか？転倒防止、汚損はないか？明るさはよいか？",
+            "ﾊﾞﾘｹｰﾄﾞ等にみだれがないか？転倒防止、汚損はないか？",
+            "工事用車両出入口の路面状況、ほこりは良いか？",
+            "開放路面に段差は無いか？仮区画線は明瞭か？",
+            "交通誘導員（保安要員、交通整理員）のたち位置は適切で、声を掛けているか？",
+            "重機使用方法は適切か？作業計画通りか？",
+            "重機作業範囲内の立ち入禁止措置が行なわれているか？",
+            "重機・車両と作業員の離隔は十分安全か？誘導員が配置されているか？",
+            "掘削方法に危険はないか？山止め等の措置は良いか？",
+            "過積載はしてないか？",
+            "場内の整理整頓はされているか？",
+            "重機及び車両を離れる際エンジン停止、鍵抜き、歯止めはされているか？",
+            "作業員通路は確保されているか？",
+            "開口部は確実に養生されているか？",
+            "産業廃棄物にはマニュフェストが発行されているか？",
+            "架空線の明示はされているか？養生は適切か？",
+            "整理整頓されているか？",
+            "第3者の立入防止対策されているか？",
+            "場内及び付近に不審物の有無",
+            "水道、ガス、電気の元栓を締めたか？出入り口の施錠は良いか？"
+        ];
+
+        let checkData = {};
+        let remarksData = {};
+        let stampImages = { dairi: null, kanri: null };
+
+        function initializeData() {
+            checkItems.forEach((item, index) => {
+                checkData[index] = {
+                    am: { maru: false, batsu: false, none: false },
+                    pm: { maru: false, batsu: false, none: false },
+                    end: { maru: false, batsu: false, none: false }
+                };
+                remarksData[index] = {
+                    am: '',
+                    pm: '',
+                    end: ''
+                };
+            });
+        }
+
+        function loadStampImages() {
+            const img1 = new Image();
+            img1.crossOrigin = 'Anonymous';
+            img1.onload = function() {
+                try {
+                    const canvas = document.createElement('canvas');
+                    canvas.width = img1.width;
+                    canvas.height = img1.height;
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(img1, 0, 0);
+                    stampImages.dairi = canvas.toDataURL('image/png');
+                    console.log('image1.png 読み込み成功');
+                } catch(e) {
+                    console.log('image1.png Canvas変換エラー:', e);
+                }
+            };
+            img1.onerror = function() {
+                console.log('image1.png が見つかりません');
+            };
+            img1.src = 'image1.png?' + new Date().getTime();
+
+            const img2 = new Image();
+            img2.crossOrigin = 'Anonymous';
+            img2.onload = function() {
+                try {
+                    const canvas = document.createElement('canvas');
+                    canvas.width = img2.width;
+                    canvas.height = img2.height;
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(img2, 0, 0);
+                    stampImages.kanri = canvas.toDataURL('image/png');
+                    console.log('image2.png 読み込み成功');
+                } catch(e) {
+                    console.log('image2.png Canvas変換エラー:', e);
+                }
+            };
+            img2.onerror = function() {
+                console.log('image2.png が見つかりません');
+            };
+            img2.src = 'image2.png?' + new Date().getTime();
+        }
+
+        function generateMobileCheckItems() {
+            const container = document.getElementById('mobileCheckItems');
+            if (!container) {
+                console.error('mobileCheckItems container not found');
+                return;
+            }
+            
+            let htmlContent = '';
+            
+            checkItems.forEach((item, index) => {
+                const isEndOnly = index === 30;
+                
+                htmlContent += `
+                    <div class="check-item">
+                        <div class="item-header">
+                            <span class="item-number">${index + 1}</span>
+                            <span class="item-text">${item}</span>
+                        </div>
+                        
+                        <div class="check-groups-container">
+                            ${!isEndOnly ? `
+                            <div class="check-and-remarks-group">
+                                <div class="time-label-mobile">🌅 AM</div>
+                                <div class="check-buttons-row">
+                                    <button class="check-button" data-index="${index}" data-time="am" data-type="maru" type="button">○</button>
+                                    <button class="check-button" data-index="${index}" data-time="am" data-type="batsu" type="button">×</button>
+                                    <button class="check-button" data-index="${index}" data-time="am" data-type="none" type="button">−</button>
+                                </div>
+                                <textarea class="remarks-input" data-index="${index}" data-time="am" placeholder="AM 記事・指摘事項等"></textarea>
+                            </div>
+                            
+                            <div class="check-and-remarks-group">
+                                <div class="time-label-mobile">🌆 PM</div>
+                                <div class="check-buttons-row">
+                                    <button class="check-button" data-index="${index}" data-time="pm" data-type="maru" type="button">○</button>
+                                    <button class="check-button" data-index="${index}" data-time="pm" data-type="batsu" type="button">×</button>
+                                    <button class="check-button" data-index="${index}" data-time="pm" data-type="none" type="button">−</button>
+                                </div>
+                                <textarea class="remarks-input" data-index="${index}" data-time="pm" placeholder="PM 記事・指摘事項等"></textarea>
+                            </div>
+                            ` : ''}
+                            
+                            <div class="check-and-remarks-group">
+                                <div class="time-label-mobile">🌙 作業終了時</div>
+                                <div class="check-buttons-row">
+                                    <button class="check-button" data-index="${index}" data-time="end" data-type="maru" type="button">○</button>
+                                    <button class="check-button" data-index="${index}" data-time="end" data-type="batsu" type="button">×</button>
+                                    <button class="check-button" data-index="${index}" data-time="end" data-type="none" type="button">−</button>
+                                </div>
+                                <textarea class="remarks-input" data-index="${index}" data-time="end" placeholder="終了時 記事・指摘事項等"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            container.innerHTML = htmlContent;
+            console.log('点検項目を生成しました: ' + checkItems.length + '項目');
+            
+            attachEventListeners();
+        }
+
+        function attachEventListeners() {
+            const allButtons = document.querySelectorAll('.check-button');
+            allButtons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const index = parseInt(this.getAttribute('data-index'));
+                    const time = this.getAttribute('data-time');
+                    const type = this.getAttribute('data-type');
+                    selectCheck(index, time, type);
+                });
+            });
+
+            const allTextareas = document.querySelectorAll('.remarks-input');
+            allTextareas.forEach(textarea => {
+                textarea.addEventListener('input', function() {
+                    const index = parseInt(this.getAttribute('data-index'));
+                    const time = this.getAttribute('data-time');
+                    updateRemarks(index, time, this.value);
+                });
+            });
+        }
+
+        function selectCheck(index, time, type) {
+            const buttons = document.querySelectorAll(`[data-index="${index}"][data-time="${time}"].check-button`);
+            buttons.forEach(btn => btn.classList.remove('active'));
+            
+            checkData[index][time] = { maru: false, batsu: false, none: false };
+            checkData[index][time][type] = true;
+            
+            const selectedButton = document.querySelector(`[data-index="${index}"][data-time="${time}"][data-type="${type}"]`);
+            if (selectedButton) {
+                selectedButton.classList.add('active');
+            }
+            
+            saveToLocalStorage();
+        }
+
+        function updateRemarks(index, time, value) {
+            remarksData[index][time] = value;
+            saveToLocalStorage();
+        }
+
+        function saveToLocalStorage() {
+            try {
+                const data = {
+                    constructionName: document.getElementById('constructionName').value,
+                    patrolName: document.getElementById('patrolName').value,
+                    reiwaYear: document.getElementById('reiwaYear').value,
+                    month: document.getElementById('month').value,
+                    day: document.getElementById('day').value,
+                    weather: document.getElementById('weather').value,
+                    timeAM: document.getElementById('timeAM').value,
+                    timePM: document.getElementById('timePM').value,
+                    timeEnd: document.getElementById('timeEnd').value,
+                    supervisorComment: document.getElementById('supervisorComment').value,
+                    confirmDairi: document.getElementById('confirmDairi').checked,
+                    confirmKanri: document.getElementById('confirmKanri').checked,
+                    checkData: checkData,
+                    remarksData: remarksData
+                };
+
+                localStorage.setItem('safetyPatrolData', JSON.stringify(data));
+            } catch(e) {
+                console.log('LocalStorage保存エラー:', e);
+            }
+        }
+
+        function loadFromLocalStorage() {
+            try {
+                const saved = localStorage.getItem('safetyPatrolData');
+                if (!saved) return;
+
+                const data = JSON.parse(saved);
+                
+                document.getElementById('constructionName').value = data.constructionName || 'R7・8・9万世橋維持工事';
+                document.getElementById('patrolName').value = data.patrolName || '玉置大志・小田幸生';
+                document.getElementById('reiwaYear').value = data.reiwaYear || '';
+                document.getElementById('month').value = data.month || '';
+                document.getElementById('day').value = data.day || '';
+                document.getElementById('weather').value = data.weather || '';
+                document.getElementById('timeAM').value = data.timeAM || '';
+                document.getElementById('timePM').value = data.timePM || '';
+                document.getElementById('timeEnd').value = data.timeEnd || '';
+                document.getElementById('supervisorComment').value = data.supervisorComment || '';
+                
+                document.getElementById('confirmDairi').checked = data.confirmDairi || false;
+                document.getElementById('confirmKanri').checked = data.confirmKanri || false;
+
+                if (data.checkData) {
+                    checkData = data.checkData;
+                    Object.keys(checkData).forEach(index => {
+                        ['am', 'pm', 'end'].forEach(time => {
+                            Object.keys(checkData[index][time]).forEach(type => {
+                                if (checkData[index][time][type]) {
+                                    const btn = document.querySelector(`[data-index="${index}"][data-time="${time}"][data-type="${type}"]`);
+                                    if (btn) btn.classList.add('active');
+                                }
+                            });
+                        });
+                    });
+                }
+
+                if (data.remarksData) {
+                    remarksData = data.remarksData;
+                    Object.keys(remarksData).forEach(index => {
+                        ['am', 'pm', 'end'].forEach(time => {
+                            const textarea = document.querySelector(`.remarks-input[data-index="${index}"][data-time="${time}"]`);
+                            if (textarea && remarksData[index][time]) {
+                                textarea.value = remarksData[index][time];
+                            }
+                        });
+                    });
+                }
+            } catch(e) {
+                console.log('LocalStorage読み込みエラー:', e);
+            }
+        }
+
+        function setupAutoSave() {
+            const inputs = document.querySelectorAll('input:not(.check-button), select, textarea:not(.remarks-input)');
+            inputs.forEach(input => {
+                input.addEventListener('change', saveToLocalStorage);
+                input.addEventListener('input', saveToLocalStorage);
+            });
+        }
+
+        function createPDFHTML() {
+            const reiwaYear = document.getElementById('reiwaYear').value;
+            const month = document.getElementById('month').value;
+            const day = document.getElementById('day').value;
+            const dateStr = reiwaYear && month && day ? `令和${reiwaYear}年${month}月${day}日` : '';
+            
+            const weather = document.getElementById('weather').value.replace(/[☀️☁️🌧️⛄]/g, '').trim();
+            const timeAM = document.getElementById('timeAM').value;
+            const timePM = document.getElementById('timePM').value;
+            const timeEnd = document.getElementById('timeEnd').value;
+            const supervisorComment = document.getElementById('supervisorComment').value;
+            const patrolName = document.getElementById('patrolName').value;
+
+            let rows = '';
+            const rowCount = checkItems.length;
+            
+            checkItems.forEach((item, index) => {
+                const isEndOnly = index === 30;
+                
+                let amCheck = '';
+                let pmCheck = '';
+                let endCheck = '';
+                
+                if (!isEndOnly) {
+                    if (checkData[index].am.maru) amCheck = '○';
+                    else if (checkData[index].am.batsu) amCheck = '×';
+                    else if (checkData[index].am.none) amCheck = '-';
+
+                    if (checkData[index].pm.maru) pmCheck = '○';
+                    else if (checkData[index].pm.batsu) pmCheck = '×';
+                    else if (checkData[index].pm.none) pmCheck = '-';
+                }
+
+                if (checkData[index].end.maru) endCheck = '○';
+                else if (checkData[index].end.batsu) endCheck = '×';
+                else if (checkData[index].end.none) endCheck = '-';
+
+                const remarksAM = isEndOnly ? '' : (remarksData[index].am || '');
+                const remarksPM = isEndOnly ? '' : (remarksData[index].pm || '');
+                const remarksEnd = remarksData[index].end || '';
+
+                if (index === 0) {
+                    rows += `
+                        <tr>
+                            <td class="pdf-item-no">${index + 1}</td>
+                            <td class="pdf-item-text">${item}</td>
+                            <td class="pdf-check-cell">${amCheck}</td>
+                            <td class="pdf-remarks-cell">${remarksAM}</td>
+                            <td class="pdf-check-cell">${pmCheck}</td>
+                            <td class="pdf-remarks-cell">${remarksPM}</td>
+                            <td class="pdf-check-cell">${endCheck}</td>
+                            <td class="pdf-remarks-cell">${remarksEnd}</td>
+                            <td class="pdf-supervisor-cell" rowspan="${rowCount}">${supervisorComment}</td>
+                        </tr>
+                    `;
+                } else {
+                    rows += `
+                        <tr>
+                            <td class="pdf-item-no">${index + 1}</td>
+                            <td class="pdf-item-text">${item}</td>
+                            <td class="pdf-check-cell">${amCheck}</td>
+                            <td class="pdf-remarks-cell">${remarksAM}</td>
+                            <td class="pdf-check-cell">${pmCheck}</td>
+                            <td class="pdf-remarks-cell">${remarksPM}</td>
+                            <td class="pdf-check-cell">${endCheck}</td>
+                            <td class="pdf-remarks-cell">${remarksEnd}</td>
+                        </tr>
+                    `;
+                }
+            });
+
+            let dairiStamp = '';
+            if (document.getElementById('confirmDairi').checked && stampImages.dairi) {
+                dairiStamp = `<img src="${stampImages.dairi}" class="pdf-stamp-image" />`;
+            }
+
+            let kanriStamp = '';
+            if (document.getElementById('confirmKanri').checked && stampImages.kanri) {
+                kanriStamp = `<img src="${stampImages.kanri}" class="pdf-stamp-image" />`;
+            }
+
+            return `
+                <div class="pdf-output-wrapper">
+                    <table class="pdf-table">
+                        <tr>
+                            <td colspan="9" class="pdf-title">工事現場安全巡視日報</td>
+                        </tr>
+                        <tr>
+                            <td class="pdf-header-label" style="width: 8%;">工事名</td>
+                            <td colspan="5" class="pdf-value">${document.getElementById('constructionName').value}</td>
+                            <td class="pdf-header-label" style="width: 10%;">安全巡視者</td>
+                            <td colspan="2" class="pdf-value">${patrolName}</td>
+                        </tr>
+                        <tr>
+                            <td class="pdf-header-label">巡視日</td>
+                            <td class="pdf-value" style="width: 15%;">${dateStr}</td>
+                            <td class="pdf-header-label" style="width: 6%;">天気</td>
+                            <td class="pdf-value" style="width: 8%;">${weather}</td>
+                            <td class="pdf-header-label" style="width: 10%;">巡視時間</td>
+                            <td colspan="4" class="pdf-value">AM:${timeAM} PM:${timePM} 終了:${timeEnd}</td>
+                        </tr>
+                        <tr>
+                            <td class="pdf-section-header" rowspan="2" style="width: 3%;">No</td>
+                            <td class="pdf-section-header" rowspan="2" style="width: 22%;">点検項目</td>
+                            <td colspan="2" class="pdf-section-header">AM</td>
+                            <td colspan="2" class="pdf-section-header">PM</td>
+                            <td colspan="2" class="pdf-section-header">作業終了時</td>
+                            <td class="pdf-section-header" rowspan="2" style="width: 20%;">統括安全責任者コメント</td>
+                        </tr>
+                        <tr>
+                            <td class="pdf-section-header" style="width: 3%;">判定</td>
+                            <td class="pdf-section-header" style="width: 13%;">記事</td>
+                            <td class="pdf-section-header" style="width: 3%;">判定</td>
+                            <td class="pdf-section-header" style="width: 13%;">記事</td>
+                            <td class="pdf-section-header" style="width: 3%;">判定</td>
+                            <td class="pdf-section-header" style="width: 13%;">記事</td>
+                        </tr>
+                        ${rows}
+                        <tr>
+                            <td colspan="7" style="border: none;"></td>
+                            <td class="pdf-header-label">現場代理人</td>
+                            <td class="pdf-stamp-cell">${dairiStamp}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="7" style="border: none;"></td>
+                            <td class="pdf-header-label">監理技術者</td>
+                            <td class="pdf-stamp-cell">${kanriStamp}</td>
+                        </tr>
+                    </table>
+                </div>
+            `;
+        }
+
+        async function exportToPDF() {
+            const overlay = document.getElementById('loadingOverlay');
+            const loadingText = document.getElementById('loadingText');
+            
+            overlay.classList.add('show');
+            loadingText.textContent = 'PDF生成中...';
+            
+            try {
+                const outputArea = document.getElementById('pdfOutputArea');
+                outputArea.style.display = 'block';
+                outputArea.innerHTML = createPDFHTML();
+                
+                await new Promise(resolve => setTimeout(resolve, 1500));
+                
+                const element = outputArea.querySelector('.pdf-output-wrapper');
+                
+                const canvas = await html2canvas(element, {
+                    scale: 3,
+                    useCORS: true,
+                    allowTaint: false,
+                    logging: false,
+                    backgroundColor: '#ffffff',
+                    width: element.scrollWidth,
+                    height: element.scrollHeight
+                });
+                
+                const imgData = canvas.toDataURL('image/jpeg', 0.95);
+                
+                const { jsPDF } = window.jspdf;
+                const pdf = new jsPDF({
+                    orientation: 'landscape',
+                    unit: 'mm',
+                    format: 'a4'
+                });
+                
+                const pdfWidth = 297;
+                const pdfHeight = 210;
+                
+                pdf.addImage(imgData, 'JPEG', 0, 0, pdfWidth, pdfHeight, '', 'FAST');
+                
+                const reiwaYear = document.getElementById('reiwaYear').value || 'X';
+                const month = document.getElementById('month').value || 'X';
+                const day = document.getElementById('day').value || 'X';
+                const filename = `工事現場安全巡視日報_R${reiwaYear}_${month}_${day}.pdf`;
+                
+                pdf.save(filename);
+                
+                outputArea.innerHTML = '';
+                outputArea.style.display = 'none';
+                loadingText.textContent = 'PDF出力完了！';
+                setTimeout(() => overlay.classList.remove('show'), 1000);
+                
+            } catch (error) {
+                console.error('PDF生成エラー:', error);
+                alert('PDF生成に失敗しました: ' + error.message);
+                document.getElementById('pdfOutputArea').innerHTML = '';
+                document.getElementById('pdfOutputArea').style.display = 'none';
+                overlay.classList.remove('show');
+            }
+        }
+
+        function clearAll() {
+            if (!confirm('すべての入力内容をクリアしますか？')) return;
+
+            document.getElementById('constructionName').value = 'R7・8・9万世橋維持工事';
+            document.getElementById('patrolName').value = '玉置大志・小田幸生';
+            document.getElementById('reiwaYear').value = '';
+            document.getElementById('month').value = '';
+            document.getElementById('day').value = '';
+            document.getElementById('weather').value = '';
+            document.getElementById('timeAM').value = '';
+            document.getElementById('timePM').value = '';
+            document.getElementById('timeEnd').value = '';
+            document.getElementById('supervisorComment').value = '';
+
+            document.getElementById('confirmDairi').checked = false;
+            document.getElementById('confirmKanri').checked = false;
+
+            const allButtons = document.querySelectorAll('.check-button');
+            allButtons.forEach(btn => btn.classList.remove('active'));
+
+            const allTextareas = document.querySelectorAll('.remarks-input');
+            allTextareas.forEach(ta => ta.value = '');
+
+            initializeData();
+            localStorage.removeItem('safetyPatrolData');
+        }
+
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', function() {
+                console.log('DOMContentLoaded - 初期化開始');
+                initializeData();
+                loadStampImages();
+                generateMobileCheckItems();
+                setTimeout(function() {
+                    loadFromLocalStorage();
+                    setupAutoSave();
+                }, 100);
+            });
+        } else {
+            console.log('既にDOMロード済み - 初期化開始');
+            initializeData();
+            loadStampImages();
+            generateMobileCheckItems();
+            setTimeout(function() {
+                loadFromLocalStorage();
+                setupAutoSave();
+            }, 100);
+        }
+    </script>
+</body>
+</html>
